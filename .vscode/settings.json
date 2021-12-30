@@ -1,0 +1,8 @@
+{
+  "python.formatting.provider": "black",
+  "python.linting.enabled": true,
+  "prettier.enable": false,
+  "emmet.includeLanguages": {
+    "django-html": "html"
+  },
+}
