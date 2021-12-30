@@ -9,5 +9,8 @@
   <body>
     <h1>Fotoblog</h1>
     {% block content %}{% endblock content %}
+    {% if user.is_authenticated %}
+      <p>Vous êtes connectés en tant que {{ request.user }}. <a href="{% url 'logout' %}">Se déconnecter</a></p>
+    {% endif %}
   </body>
 </html>
