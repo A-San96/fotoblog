@@ -14,6 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView
+from django.shortcuts import redirect
 from django.urls import path
 
 import authentication.views
@@ -21,7 +23,17 @@ import blog.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', authentication.views.LoginPageView.as_view(), name='login'),
-    path('logout/', authentication.views.logout_user, name='logout'),
+    # path('', authentication.views.LoginPageView.as_view(), name='login'), # Using Class-Based View
+    path('', LoginView.as_view(
+                template_name='authentication/login.html',
+                redirect_authenticated_user=True,
+            ), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('change-password/', PasswordChangeView.as_view(
+                                template_name='authentication/change-password.html',
+                            ), name='change-password'),
+    path('change-password-done/', PasswordChangeDoneView.as_view(
+                                    template_name='authentication/change-password-done.html',
+                                ), name='change-password-done'),
     path('home', blog.views.HomeView.as_view(), name='home'),
 ]
