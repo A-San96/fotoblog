@@ -35,5 +35,6 @@ urlpatterns = [
     path('change-password-done/', PasswordChangeDoneView.as_view(
                                     template_name='authentication/change-password-done.html',
                                 ), name='change-password-done'),
+    path('signup/', authentication.views.SignupPageView.as_view(), name='signup'),
     path('home', blog.views.HomeView.as_view(), name='home'),
 ]
