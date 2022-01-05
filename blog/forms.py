@@ -1,6 +1,9 @@
 from django.conf import settings
-from django.db import models
+from django import forms
+from . import models
 
 
-class Photo(models.Model):
-    image
+class PhotoForm(forms.ModelForm):
+    class Meta:
+        model = models.Photo
+        fields = ('image', 'caption')

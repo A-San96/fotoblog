@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView
 from django.shortcuts import redirect
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 import authentication.views
 import blog.views
@@ -38,3 +40,6 @@ urlpatterns = [
     path('signup/', authentication.views.SignupPageView.as_view(), name='signup'),
     path('home', blog.views.HomeView.as_view(), name='home'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
