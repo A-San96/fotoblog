@@ -3,14 +3,16 @@ from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from . import forms
+from . import forms, models
 
 
 class HomeView(LoginRequiredMixin, View):
     template_name = 'blog/home.html'
+    photo_class = models.Photo
 
     def get(self, request):
-        return render(request, self.template_name)
+        photos = self.photo_class.objects.all()
+        return render(request, self.template_name, {'photos': photos})
 
 
 class PhotoUploadView(LoginRequiredMixin, View):

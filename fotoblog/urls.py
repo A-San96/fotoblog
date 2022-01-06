@@ -39,6 +39,7 @@ urlpatterns = [
                                 ), name='change-password-done'),
     path('signup/', authentication.views.SignupPageView.as_view(), name='signup'),
     path('home', blog.views.HomeView.as_view(), name='home'),
+    path('photo/upload', blog.views.PhotoUploadView.as_view(), name='photo-upload'),
 ]
 
 if settings.DEBUG:
