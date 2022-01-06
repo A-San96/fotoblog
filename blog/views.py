@@ -12,7 +12,7 @@ class HomeView(LoginRequiredMixin, View):
 
     def get(self, request):
         photos = self.photo_class.objects.all()
-        return render(request, self.template_name, {'photos': photos})
+        return render(request, self.template_name, context={'photos': photos})
 
 
 class PhotoUploadView(LoginRequiredMixin, View):
@@ -21,7 +21,7 @@ class PhotoUploadView(LoginRequiredMixin, View):
 
     def get(self, request):
         form = self.form_class()
-        return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, context={'form': form})
 
     def post(self, request):
         form = self.form_class(request.POST, request.FILES)
@@ -34,6 +34,6 @@ class PhotoUploadView(LoginRequiredMixin, View):
             photo.save()
             return redirect('home')
 
-        return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, context={'form': form})
 
 

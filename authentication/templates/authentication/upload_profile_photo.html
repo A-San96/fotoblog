@@ -1,0 +1,12 @@
+{% extends 'base.html' %} 
+{% block content %}
+  <h2>Ajouter ma photo de profil</h2>
+  {% if form.errors %}
+    {{ form.errors }}
+  {% endif %}
+  <form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %} 
+    {{ form.as_p }}
+    <button type="submit">Ajouter</button>
+  </form>
+{% endblock content %}

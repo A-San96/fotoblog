@@ -40,6 +40,8 @@ urlpatterns = [
     path('signup/', authentication.views.SignupPageView.as_view(), name='signup'),
     path('home', blog.views.HomeView.as_view(), name='home'),
     path('photo/upload', blog.views.PhotoUploadView.as_view(), name='photo-upload'),
+    path('photo-profile/upload', authentication.views.UploadProfilePhotoView.as_view(), name='upload-profile-photo'),
+
 ]
 
 if settings.DEBUG:

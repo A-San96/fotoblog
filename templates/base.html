@@ -1,17 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fotoblog</title>
-  </head>
-  <body>
-    <h1>Fotoblog</h1>
-    {% block content %}{% endblock content %}
-    {% if user.is_authenticated %}
-      <p>Vous êtes connectés en tant que {{ request.user }}. <a href="{% url 'logout' %}">Se déconnecter</a></p>
-      <p><a href="{% url 'change-password' %}">Changer de mot de passe.</a></p>
-    {% endif %}
-  </body>
+{% load static %}
+<html>
+    <head>
+        <title>FotoBlog</title>
+        <link rel="stylesheet" href="{% static 'app.css' %}">
+    </head>
+    <body>
+        <div class="sidebar">
+            <h1>FotoBlog</h1>
+            {% if user.is_authenticated %}
+                <p>Salut, {{ user }} !</p>
+                {% if user.profile_photo %}
+                    <img class="avatar" src={{ user.profile_photo.url }}>
+                {% else %}
+                    <img class="avatar" src="{% static 'images/default_profile.png'%}">
+                {% endif %}
+                <p><a href="{% url 'home' %}">Accueil</a></p>
+                <p><a href="{% url 'photo-upload' %}">Téléverser une photo</a></p>
+                <p><a href="{% url 'upload-profile-photo' %}">Changer la photo de profil</a></p>
+                <p><a href="{% url 'change-password' %}">Changer le mot de passe</a></p>
+                <p><a href="{% url 'logout' %}">Se déconnecter</a></p>
+            {% endif %}
+        </div>
+        <div class="main">
+            {% block content %}{% endblock content %}
+        </div>
+    </body>
 </html>
