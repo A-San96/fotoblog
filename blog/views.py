@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 # from django.contrib.auth.decorators import login_required
 from django.views.generic import View
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,10 +9,12 @@ from . import forms, models
 class HomeView(LoginRequiredMixin, View):
     template_name = 'blog/home.html'
     photo_class = models.Photo
+    blog_class = models.Blog
 
     def get(self, request):
         photos = self.photo_class.objects.all()
-        return render(request, self.template_name, context={'photos': photos})
+        blogs = self.blog_class.objects.all()
+        return render(request, self.template_name, context={'photos': photos, 'blogs': blogs})
 
 
 class PhotoUploadView(LoginRequiredMixin, View):
@@ -71,3 +73,10 @@ class BlogAndPhotoUploadView(LoginRequiredMixin, View):
         }
         return render(request, self.template_name, context=context)
 
+
+class BlogView(LoginRequiredMixin, View):
+    template_name = 'blog/view_blog.html'
+
+    def get(self, request, blog_id):
+        blog = get_object_or_404(models.Blog, id=blog_id)
+        return render(request, self.template_name, context={'blog': blog})
