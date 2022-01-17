@@ -37,3 +37,37 @@ class PhotoUploadView(LoginRequiredMixin, View):
         return render(request, self.template_name, context={'form': form})
 
 
+class BlogAndPhotoUploadView(LoginRequiredMixin, View):
+    blog_form_class = forms.BlogForm
+    photo_form_class = forms.PhotoForm
+    template_name = 'blog/create_blog_post.html'
+
+    def get(self, request):
+        blog_form = self.blog_form_class()
+        photo_form = self.photo_form_class()
+        context = {
+            'blog_form': blog_form,
+            'photo_form': photo_form
+        }
+        return render(request, self.template_name, context=context)
+
+    def post(self, request):
+        blog_form = self.blog_form_class(request.POST)
+        photo_form = self.photo_form_class(request.POST, request.FILES)
+
+        if all([blog_form.is_valid(), photo_form.is_valid()]):
+            photo = photo_form.save(commit=False)
+            photo.uploader = request.user
+            photo.save()
+            blog = blog_form.save()
+            blog.author = request.user
+            blog.photo = photo
+            blog.save()
+            return redirect('home')
+
+        context = {
+            'blog_form': blog_form,
+            'photo_form': photo_form
+        }
+        return render(request, self.template_name, context=context)
+

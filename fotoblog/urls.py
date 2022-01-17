@@ -41,6 +41,7 @@ urlpatterns = [
     path('home', blog.views.HomeView.as_view(), name='home'),
     path('photo/upload', blog.views.PhotoUploadView.as_view(), name='photo-upload'),
     path('photo-profile/upload', authentication.views.UploadProfilePhotoView.as_view(), name='upload-profile-photo'),
+    path('blog/create', blog.views.BlogAndPhotoUploadView.as_view(), name='blog-create'),
 
 ]
 
